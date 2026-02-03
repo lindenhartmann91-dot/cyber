@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberSentinel | ExposingWithJay</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Google Sign-In SDK -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body>
+<body class="dark-theme">
     <!-- Header with Login Button -->
     <header>
         <nav>
@@ -29,9 +28,9 @@
                     <li><a href="locals.html">LOCALS</a></li>
                 </ul>
                 
-                <!-- Secure Login Button (Only visible to authorized users) -->
+                <!-- Secure Login Button -->
                 <div id="authSection" class="auth-section">
-                    <button id="loginBtn" class="btn btn-primary login-btn">
+                    <button id="loginBtn" class="btn login-btn">
                         <i class="fas fa-lock"></i> ADMIN LOGIN
                     </button>
                     <div id="userInfo" class="user-info" style="display: none;">
@@ -50,7 +49,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container">
+    <main>
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero cyber-border">
@@ -92,15 +91,12 @@
                         <i class="fab fa-youtube"></i>
                         <h3>Latest YouTube Videos</h3>
                     </div>
-                    <div class="video-container">
-                        <!-- Placeholder for YouTube embed -->
-                        <div class="video-placeholder">
-                            <i class="fab fa-youtube"></i>
-                            <p>Subscribe to ExposingWithJay on YouTube for the latest investigations and educational content about online safety.</p>
-                            <a href="https://youtube.com/@ExposingWithJay" target="_blank" class="btn btn-primary">
-                                <i class="fab fa-youtube"></i> Subscribe Now
-                            </a>
-                        </div>
+                    <div class="video-placeholder">
+                        <i class="fab fa-youtube"></i>
+                        <p>Subscribe to ExposingWithJay on YouTube for the latest investigations and educational content about online safety.</p>
+                        <a href="https://youtube.com/@ExposingWithJay" target="_blank" class="btn btn-primary">
+                            <i class="fab fa-youtube"></i> Subscribe Now
+                        </a>
                     </div>
                 </div>
 
@@ -110,14 +106,12 @@
                         <i class="fab fa-tiktok"></i>
                         <h3>TikTok Content</h3>
                     </div>
-                    <div class="tiktok-container">
-                        <div class="tiktok-placeholder">
-                            <i class="fab fa-tiktok"></i>
-                            <p>Follow @exposingwithjay on TikTok for quick safety tips, awareness content, and community updates.</p>
-                            <a href="https://www.tiktok.com/@.exposingwithjay" target="_blank" class="btn btn-secondary">
-                                <i class="fab fa-tiktok"></i> Follow on TikTok
-                            </a>
-                        </div>
+                    <div class="tiktok-placeholder">
+                        <i class="fab fa-tiktok"></i>
+                        <p>Follow @exposingwithjay on TikTok for quick safety tips, awareness content, and community updates.</p>
+                        <a href="https://www.tiktok.com/@.exposingwithjay" target="_blank" class="btn btn-secondary">
+                            <i class="fab fa-tiktok"></i> Follow on TikTok
+                        </a>
                     </div>
                 </div>
 
@@ -127,14 +121,12 @@
                         <i class="fab fa-discord"></i>
                         <h3>Join Our Community</h3>
                     </div>
-                    <div class="discord-container">
-                        <div class="discord-info">
-                            <i class="fab fa-discord"></i>
-                            <p>Connect with our community of advocates and parents working together to keep children safe online.</p>
-                            <a href="https://discord.gg/X3gNgdNhyz" target="_blank" class="btn btn-secondary">
-                                <i class="fab fa-discord"></i> Join Discord
-                            </a>
-                        </div>
+                    <div class="discord-placeholder">
+                        <i class="fab fa-discord"></i>
+                        <p>Connect with our community of advocates and parents working together to keep children safe online.</p>
+                        <a href="https://discord.gg/X3gNgdNhyz" target="_blank" class="btn btn-discord">
+                            <i class="fab fa-discord"></i> Join Discord
+                        </a>
                     </div>
                 </div>
 
@@ -144,25 +136,23 @@
                         <i class="fas fa-link"></i>
                         <h3>Quick Links</h3>
                     </div>
-                    <div class="links-container">
-                        <div class="quick-links">
-                            <a href="about.html" class="quick-link">
-                                <i class="fas fa-info-circle"></i>
-                                <span>About Us</span>
-                            </a>
-                            <a href="mission.html" class="quick-link">
-                                <i class="fas fa-bullseye"></i>
-                                <span>Our Mission</span>
-                            </a>
-                            <a href="contact.html" class="quick-link">
-                                <i class="fas fa-envelope"></i>
-                                <span>Contact</span>
-                            </a>
-                            <a href="admin-info.html" class="quick-link">
-                                <i class="fas fa-cog"></i>
-                                <span>Admin Info</span>
-                            </a>
-                        </div>
+                    <div class="quick-links">
+                        <a href="about.html" class="quick-link">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                        <a href="mission.html" class="quick-link">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Our Mission</span>
+                        </a>
+                        <a href="contact.html" class="quick-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact</span>
+                        </a>
+                        <a href="admin-info.html" class="quick-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Admin Info</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -202,19 +192,6 @@
                     </a>
                 </div>
             </div>
-            
-            <div class="footer-section">
-                <div class="system-status-footer">
-                    <div class="status-display-footer">
-                        <span class="status-indicator online"></span>
-                        <span>// SYSTEM STATUS: ONLINE //</span>
-                    </div>
-                    <div class="threat-level low">
-                        <span class="status-indicator"></span>
-                        <span>THREAT LEVEL: VIGILANT</span>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <div class="footer-bottom">
@@ -235,32 +212,7 @@
                 <button class="modal-close" id="closeLoginModal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="auth-message" id="authMessage"></div>
-                
-                <!-- Google Sign-In -->
-                <div class="auth-option">
-                    <h4><i class="fab fa-google"></i> SIGN IN WITH GOOGLE</h4>
-                    <div id="g_id_onload"
-                        data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                        data-login_uri="https://yourdomain.com/auth/google"
-                        data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin"
-                        data-type="standard"
-                        data-size="large"
-                        data-theme="filled_blue"
-                        data-text="signin_with"
-                        data-shape="rectangular"
-                        data-logo_alignment="left">
-                    </div>
-                    <p class="auth-note">Approved Google accounts only</p>
-                </div>
-                
-                <div class="auth-divider">
-                    <span>OR</span>
-                </div>
-                
-                <!-- Manual Admin Login -->
+                <!-- Login form content -->
                 <div class="auth-option">
                     <h4><i class="fas fa-user-secret"></i> ADMIN CREDENTIALS</h4>
                     <form id="adminLoginForm">
@@ -278,17 +230,6 @@
                             </label>
                             <input type="password" id="adminPassword" name="password" 
                                    placeholder="Enter access code" required>
-                            <div class="password-toggle">
-                                <i class="fas fa-eye" id="togglePassword"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="adminToken">
-                                <i class="fas fa-fingerprint"></i> SECURITY TOKEN
-                            </label>
-                            <input type="text" id="adminToken" name="token" 
-                                   placeholder="Optional security token" maxlength="6">
                         </div>
                         
                         <button type="submit" class="btn btn-primary auth-btn">
@@ -296,18 +237,45 @@
                         </button>
                     </form>
                 </div>
-                
-                <div class="security-warning">
-                    <h5><i class="fas fa-exclamation-triangle"></i> IMPORTANT</h5>
-                    <p>Admin access is restricted to authorized personnel only. All login attempts are logged and monitored.</p>
-                    <p class="warning-text">For emergency access, contact system administrator.</p>
-                </div>
             </div>
         </div>
     </div>
 
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const timeString = `[${now.getUTCHours().toString().padStart(2, '0')}:${now.getUTCMinutes().toString().padStart(2, '0')}:${now.getUTCSeconds().toString().padStart(2, '0')} UTC]`;
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Login modal
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeModal = document.getElementById('closeLoginModal');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
