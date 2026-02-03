@@ -8,38 +8,226 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for the new header */
+        .top-system-bar {
+            background: linear-gradient(90deg, #0a0e17 0%, #1a1f2e 100%);
+            border-bottom: 1px solid #00ffff;
+            padding: 6px 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: #00ffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .system-status-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .system-status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff00;
+            box-shadow: 0 0 8px #00ff00;
+        }
+        
+        .status-indicator.encrypted {
+            background: #00ffff;
+            box-shadow: 0 0 8px #00ffff;
+        }
+        
+        .timestamp-top {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+        
+        .header-new {
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00ffff;
+        }
+        
+        .nav-container-new {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo-new {
+            display: flex;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 28px;
+            color: #00ffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .logo-new span {
+            color: #ffffff;
+            font-weight: 400;
+        }
+        
+        .nav-links-new {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links-new a {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #aaa;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        
+        .nav-links-new a:hover,
+        .nav-links-new a.active {
+            color: #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+            border-bottom: 2px solid #00ffff;
+        }
+        
+        .nav-right-new {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .login-btn-new {
+            background: linear-gradient(90deg, #ff3366 0%, #ff0066 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .login-btn-new:hover {
+            background: linear-gradient(90deg, #ff0066 0%, #cc0052 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 102, 0.3);
+        }
+        
+        .mobile-menu-btn-new {
+            display: none;
+            background: none;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-links-new {
+                display: none;
+            }
+            
+            .nav-links-new.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 23, 0.95);
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 2px solid #00ffff;
+                z-index: 1000;
+            }
+            
+            .mobile-menu-btn-new {
+                display: block;
+            }
+            
+            .top-system-bar {
+                flex-direction: column;
+                gap: 5px;
+                padding: 8px 10px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-                CYBER<span>SENTINEL</span>
+    <!-- Top System Status Bar -->
+    <div class="top-system-bar">
+        <div class="system-status-top">
+            <div class="system-status-item">
+                <span class="status-indicator"></span>
+                <span>// SYSTEM INITIALIZED //</span>
             </div>
+            <div class="system-status-item">
+                <span class="status-indicator encrypted"></span>
+                <span>ENCRYPTED</span>
+            </div>
+            <div class="system-status-item">
+                <span class="status-indicator"></span>
+                <span>VIGILANT</span>
+            </div>
+        </div>
+        <div class="timestamp-top" id="currentTimeTop">[18:44:26 UTC]</div>
+    </div>
+
+    <!-- Header with new navigation -->
+    <header class="header-new">
+        <nav class="nav-container-new">
+            <a href="index.html" class="logo-new">
+                CYBER<span>SENTINEL</span>
+            </a>
             
-            <div class="nav-right">
-                <ul class="nav-links">
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
-                    <li><a href="mission.html" class="active">MISSION</a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
-                    <li><a href="#" class="nav-link">LOCALS</a></li>
-                </ul>
-                
-                <div id="authSection" class="auth-section">
-                    <button id="loginBtn" class="btn btn-primary login-btn">
-                        <i class="fas fa-lock"></i> ADMIN LOGIN
-                    </button>
-                    <div id="userInfo" class="user-info" style="display: none;">
-                        <span id="userName"></span>
-                        <button id="logoutBtn" class="btn-logout">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <ul class="nav-links-new">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="mission.html" class="active">MISSION</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="#">LOCALS</a></li>
+            </ul>
+            
+            <div class="nav-right-new">
+                <button id="loginBtnNew" class="login-btn-new">
+                    <i class="fas fa-lock"></i> ROOMIN LOGIN
+                </button>
+                <button class="mobile-menu-btn-new" id="mobileMenuBtnNew">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -338,61 +526,48 @@
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content cyber-border">
-            <div class="modal-header">
-                <h3><i class="fas fa-shield-alt"></i> SECURE ADMIN ACCESS</h3>
-                <button class="modal-close" id="closeLoginModal" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="auth-message" id="authMessage"></div>
-                
-                <div class="auth-option">
-                    <h4><i class="fas fa-user-secret"></i> ADMIN CREDENTIALS</h4>
-                    <form id="adminLoginForm">
-                        <div class="form-group">
-                            <label for="adminUsername">
-                                <i class="fas fa-user"></i> ADMIN ID
-                            </label>
-                            <input type="text" id="adminUsername" name="username" 
-                                   placeholder="Enter admin ID" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="adminPassword">
-                                <i class="fas fa-key"></i> ACCESS CODE
-                            </label>
-                            <input type="password" id="adminPassword" name="password" 
-                                   placeholder="Enter access code" required>
-                            <div class="password-toggle">
-                                <i class="fas fa-eye" id="togglePassword"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="adminToken">
-                                <i class="fas fa-fingerprint"></i> SECURITY TOKEN
-                            </label>
-                            <input type="text" id="adminToken" name="token" 
-                                   placeholder="Optional security token" maxlength="6">
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary auth-btn">
-                            <i class="fas fa-sign-in-alt"></i> AUTHENTICATE
-                        </button>
-                    </form>
-                </div>
-                
-                <div class="security-warning">
-                    <h5><i class="fas fa-exclamation-triangle"></i> IMPORTANT</h5>
-                    <p>Admin access is restricted to authorized personnel only. All login attempts are logged and monitored.</p>
-                    <p class="warning-text">For emergency access, contact system administrator.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- JavaScript for new header functionality -->
+    <script>
+        // Update timestamps
+        function updateTime() {
+            const now = new Date();
+            const utcTime = now.toUTCString().split(' ')[4];
+            document.getElementById('currentTimeTop').textContent = `[${utcTime} UTC]`;
+            document.getElementById('currentTime').textContent = `[${utcTime} UTC]`;
+        }
+        
+        // Update time immediately and every second
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtnNew').addEventListener('click', function() {
+            document.querySelector('.nav-links-new').classList.toggle('active');
+        });
+        
+        // Login button functionality
+        document.getElementById('loginBtnNew').addEventListener('click', function() {
+            // Trigger the existing login modal
+            if (typeof window.showLoginModal === 'function') {
+                window.showLoginModal();
+            } else {
+                // Fallback if main.js isn't loaded
+                document.getElementById('loginModal').style.display = 'block';
+            }
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.querySelector('.nav-links-new');
+            const mobileBtn = document.getElementById('mobileMenuBtnNew');
+            
+            if (!navLinks.contains(event.target) && !mobileBtn.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
 
+    <!-- Original scripts (they'll still work with the new header) -->
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
