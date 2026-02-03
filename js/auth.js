@@ -2,326 +2,294 @@
 class CyberAuth {
     constructor() {
         this.currentUser = null;
-        this.sessionTimeout = 30 * 60 * 1000; // 30 minutes
-        this.sessionTimer = null;
+        this.isAuthenticated = false;
+        this.sessionToken = null;
+        this.googleUser = null;
         this.init();
     }
-
+    
     init() {
         this.checkExistingSession();
         this.bindEvents();
-        this.startSessionTimer();
+        this.initGoogleSignIn();
+        this.setupAutoLogout();
     }
-
+    
     bindEvents() {
-        // Login form submission
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+        // Login button
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => this.showLoginModal());
         }
-
-        // Password visibility toggle
-        const togglePassword = document.getElementById('togglePassword');
-        if (togglePassword) {
-            togglePassword.addEventListener('click', () => this.togglePasswordVisibility());
+        
+        // Close modal button
+        const closeModal = document.getElementById('closeLoginModal');
+        if (closeModal) {
+            closeModal.addEventListener('click', () => this.hideLoginModal());
         }
-
+        
+        // Admin login form
+        const adminForm = document.getElementById('adminLoginForm');
+        if (adminForm) {
+            adminForm.addEventListener('submit', (e) => this.handleAdminLogin(e));
+        }
+        
         // Logout button
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => this.logout());
         }
-
-        // Session monitoring
-        document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
-        window.addEventListener('beforeunload', () => this.saveSessionState());
-    }
-
-    async handleLogin(e) {
-        e.preventDefault();
         
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
-        const twoFactor = document.getElementById('twoFactor')?.value.trim() || '';
-
-        // Show loading state
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AUTHENTICATING...';
-        submitBtn.disabled = true;
-
-        try {
-            // Validate credentials
-            if (!this.validateCredentials(username, password)) {
-                throw new Error('Invalid credentials format');
+        // Password toggle
+        const togglePassword = document.getElementById('togglePassword');
+        if (togglePassword) {
+            togglePassword.addEventListener('click', () => this.togglePasswordVisibility());
+        }
+        
+        // Close modal on outside click
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.hideLoginModal();
+                }
+            });
+        }
+        
+        // Handle Google Sign-In callback
+        window.handleGoogleSignIn = (response) => this.handleGoogleSignIn(response);
+    }
+    
+    initGoogleSignIn() {
+        if (!SecurityConfig.FEATURES.enableGoogleSignIn) return;
+        
+        // Google Sign-In initialization
+        if (typeof google !== 'undefined') {
+            google.accounts.id.initialize({
+                client_id: SecurityConfig.GOOGLE_CONFIG.clientId,
+                callback: this.handleGoogleSignIn.bind(this),
+                auto_select: false,
+                cancel_on_tap_outside: true
+            });
+            
+            // Render button if element exists
+            const googleBtn = document.querySelector('.g_id_signin');
+            if (googleBtn) {
+                google.accounts.id.renderButton(
+                    googleBtn,
+                    { theme: "filled_blue", size: "large", type: "standard" }
+                );
             }
-
-            // Attempt login
-            const user = await this.authenticate(username, password, twoFactor);
+        }
+    }
+    
+    async handleGoogleSignIn(response) {
+        try {
+            // Decode the JWT token
+            const token = response.credential;
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            
+            // Verify email is authorized
+            const authorizedEmails = SecurityConfig.GOOGLE_CONFIG.authorizedEmails;
+            if (!authorizedEmails.includes(payload.email)) {
+                this.showMessage('This Google account is not authorized for admin access.', 'error');
+                return;
+            }
+            
+            // Create user session
+            this.googleUser = {
+                name: payload.name,
+                email: payload.email,
+                picture: payload.picture,
+                token: token
+            };
+            
+            // Create session
+            const session = {
+                user: {
+                    name: payload.name,
+                    email: payload.email,
+                    role: 'admin',
+                    source: 'google'
+                },
+                token: this.generateSessionToken(),
+                expires: Date.now() + SecurityConfig.SECURITY.sessionTimeout
+            };
             
             // Store session
-            this.createSession(user);
+            window.secureStorage.storeSession(session);
             
-            // Show success message
-            this.showMessage('Authentication successful! Redirecting...', 'success');
+            // Update UI
+            this.currentUser = session.user;
+            this.sessionToken = session.token;
+            this.isAuthenticated = true;
             
-            // Redirect to admin panel
+            this.showMessage('Google authentication successful!', 'success');
+            this.hideLoginModal();
+            this.updateAuthUI();
+            
+            // Redirect to dashboard after delay
             setTimeout(() => {
-                window.location.href = 'admin-dashboard.html';
+                window.location.href = 'dashboard.html';
             }, 1500);
-
+            
         } catch (error) {
-            this.showMessage(error.message, 'error');
-            
-            // Log failed attempt
-            this.logLoginAttempt(username, false);
-            
-            // Reset button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            
-            // Add security delay
-            await this.delay(2000);
+            console.error('Google Sign-In error:', error);
+            this.showMessage('Google authentication failed. Please try again.', 'error');
         }
     }
-
-    validateCredentials(username, password) {
-        // Admin ID format validation
-        const adminIdRegex = /^admin_[a-zA-Z0-9]{4,12}$/;
-        if (!adminIdRegex.test(username)) {
-            throw new Error('Invalid admin ID format. Use: admin_xxxx');
+    
+    async handleAdminLogin(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const username = document.getElementById('adminUsername').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        const token = document.getElementById('adminToken')?.value.trim() || '';
+        
+        // Check if locked out
+        if (window.secureStorage.isLockedOut(username)) {
+            this.showMessage('Account locked. Please try again later.', 'error');
+            return;
         }
-
-        // Password strength validation
-        if (password.length < 8) {
-            throw new Error('Password must be at least 8 characters');
-        }
-
-        return true;
-    }
-
-    async authenticate(username, password, twoFactor = '') {
-        // Simulate API call delay
-        await this.delay(1000);
-
-        // In production, this would be a real API call
-        // For demo purposes, using hardcoded admin credentials
-        const validAdmins = {
-            'admin_jay': {
-                password: 'CyberSentinel2026!',
-                twoFactor: twoFactor ? '123456' : null,
+        
+        // Validate credentials
+        const isValid = this.validateAdminCredentials(username, password);
+        
+        if (isValid) {
+            // Successful login
+            window.secureStorage.logAttempt(username, true);
+            
+            // Create session
+            const user = SecurityConfig.ADMIN_CREDENTIALS[username];
+            const session = {
                 user: {
-                    id: 'admin_001',
-                    username: 'admin_jay',
-                    name: 'Jay (Owner)',
-                    role: 'owner',
-                    permissions: ['all'],
-                    avatar: 'jay'
-                }
-            },
-            'admin_linden': {
-                password: 'SecurePass123!',
-                twoFactor: twoFactor ? '654321' : null,
-                user: {
-                    id: 'admin_002',
-                    username: 'admin_linden',
-                    name: 'Linden (Co-Owner)',
-                    role: 'co-owner',
-                    permissions: ['manage_staff', 'view_contacts', 'view_logs'],
-                    avatar: 'linden'
-                }
+                    name: user.name,
+                    username: username,
+                    role: user.role,
+                    permissions: user.permissions,
+                    source: 'admin'
+                },
+                token: this.generateSessionToken(),
+                expires: Date.now() + SecurityConfig.SECURITY.sessionTimeout
+            };
+            
+            // Store session
+            window.secureStorage.storeSession(session);
+            
+            // Update state
+            this.currentUser = session.user;
+            this.sessionToken = session.token;
+            this.isAuthenticated = true;
+            
+            this.showMessage('Admin authentication successful!', 'success');
+            this.hideLoginModal();
+            this.updateAuthUI();
+            
+            // Clear form
+            form.reset();
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+            
+        } else {
+            // Failed login
+            window.secureStorage.logAttempt(username, false);
+            const failedAttempts = window.secureStorage.getFailedAttempts(username);
+            const remaining = SecurityConfig.SECURITY.maxLoginAttempts - failedAttempts;
+            
+            if (remaining > 0) {
+                this.showMessage(`Invalid credentials. ${remaining} attempts remaining.`, 'error');
+            } else {
+                this.showMessage('Account locked. Please try again in 15 minutes.', 'error');
             }
-        };
-
-        const admin = validAdmins[username];
-        
-        if (!admin) {
-            throw new Error('Invalid admin credentials');
         }
-
-        if (admin.password !== password) {
-            throw new Error('Invalid password');
-        }
-
-        // Optional 2FA verification
-        if (twoFactor && admin.twoFactor && admin.twoFactor !== twoFactor) {
-            throw new Error('Invalid 2FA code');
-        }
-
-        // Log successful login
-        this.logLoginAttempt(username, true);
-
-        return admin.user;
     }
-
-    createSession(user) {
-        this.currentUser = user;
+    
+    validateAdminCredentials(username, password) {
+        // Check if username exists
+        if (!SecurityConfig.ADMIN_CREDENTIALS[username]) {
+            return false;
+        }
         
-        // Store session in localStorage (in production, use secure HTTP-only cookies)
-        const sessionData = {
-            user: user,
-            timestamp: Date.now(),
-            token: this.generateSessionToken()
-        };
-        
-        localStorage.setItem('cybersentinel_session', JSON.stringify(sessionData));
-        
-        // Start session timeout
-        this.startSessionTimer();
+        // Check password (admin+ user: login password: 120520)
+        const user = SecurityConfig.ADMIN_CREDENTIALS[username];
+        return user.password === password;
     }
-
+    
     checkExistingSession() {
-        const sessionData = localStorage.getItem('cybersentinel_session');
-        
-        if (sessionData) {
-            try {
-                const session = JSON.parse(sessionData);
-                const now = Date.now();
-                const sessionAge = now - session.timestamp;
-                
-                if (sessionAge < this.sessionTimeout) {
-                    this.currentUser = session.user;
-                    
-                    // If on login page, redirect to admin
-                    if (window.location.pathname.includes('login.html')) {
-                        window.location.href = 'admin-dashboard.html';
-                    }
-                    
-                    // Update session timestamp
-                    session.timestamp = now;
-                    localStorage.setItem('cybersentinel_session', JSON.stringify(session));
-                    
-                } else {
-                    // Session expired
-                    this.logout();
-                }
-            } catch (error) {
-                console.error('Session validation error:', error);
-                this.logout();
-            }
-        }
-    }
-
-    logout() {
-        // Log logout event
-        if (this.currentUser) {
-            this.logEvent('logout', `User ${this.currentUser.username} logged out`);
-        }
-        
-        // Clear session data
-        this.currentUser = null;
-        localStorage.removeItem('cybersentinel_session');
-        
-        // Stop session timer
-        if (this.sessionTimer) {
-            clearTimeout(this.sessionTimer);
-        }
-        
-        // Redirect to login page
-        window.location.href = 'login.html';
-    }
-
-    startSessionTimer() {
-        if (this.sessionTimer) {
-            clearTimeout(this.sessionTimer);
-        }
-        
-        this.sessionTimer = setTimeout(() => {
-            this.showMessage('Session expired due to inactivity', 'error');
-            this.logout();
-        }, this.sessionTimeout);
-    }
-
-    resetSessionTimer() {
-        this.startSessionTimer();
-    }
-
-    handleVisibilityChange() {
-        if (!document.hidden) {
-            // User returned to tab, check session
-            this.checkExistingSession();
-        }
-    }
-
-    saveSessionState() {
-        if (this.currentUser) {
+        try {
+            // Check for stored session
             const sessionData = localStorage.getItem('cybersentinel_session');
             if (sessionData) {
                 const session = JSON.parse(sessionData);
-                session.lastActivity = Date.now();
-                localStorage.setItem('cybersentinel_session', JSON.stringify(session));
+                
+                // Validate session
+                if (window.secureStorage.validateSession(session.token)) {
+                    this.currentUser = session.user;
+                    this.sessionToken = session.token;
+                    this.isAuthenticated = true;
+                    this.updateAuthUI();
+                    
+                    // If on login page, redirect to dashboard
+                    if (window.location.pathname.includes('login.html')) {
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    this.logout();
+                }
             }
+        } catch (error) {
+            console.error('Session check failed:', error);
+            this.logout();
         }
     }
-
-    generateSessionToken() {
-        return 'cs_' + Math.random().toString(36).substr(2, 16) + '_' + Date.now().toString(36);
-    }
-
-    logLoginAttempt(username, success) {
-        const logEntry = {
-            timestamp: new Date().toISOString(),
-            username: username,
-            success: success,
-            ip: '127.0.0.1', // In production, get real IP
-            userAgent: navigator.userAgent
-        };
-        
-        // Save to localStorage (in production, send to server)
-        const logs = JSON.parse(localStorage.getItem('login_logs') || '[]');
-        logs.unshift(logEntry);
-        
-        // Keep only last 100 logs
-        if (logs.length > 100) {
-            logs.pop();
-        }
-        
-        localStorage.setItem('login_logs', JSON.stringify(logs));
-        
-        // Log to console for debugging
-        console.log(`Login attempt: ${username} - ${success ? 'SUCCESS' : 'FAILED'}`);
-    }
-
-    logEvent(type, description) {
-        const event = {
-            timestamp: new Date().toISOString(),
-            type: type,
-            description: description,
-            user: this.currentUser?.username || 'system'
-        };
-        
-        // Save to localStorage
-        const events = JSON.parse(localStorage.getItem('admin_events') || '[]');
-        events.unshift(event);
-        
-        if (events.length > 1000) {
-            events.pop();
-        }
-        
-        localStorage.setItem('admin_events', JSON.stringify(events));
-    }
-
-    showMessage(message, type = 'info') {
-        // Could integrate with a toast/notification UI
-        console.log(`[${type.toUpperCase()}] ${message}`);
-    }
-
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    togglePasswordVisibility() {
-        const passwordInput = document.getElementById('password');
-        const toggleIcon = document.querySelector('.password-toggle i');
-        if (passwordInput && toggleIcon) {
-            const isPassword = passwordInput.type === 'password';
-            passwordInput.type = isPassword ? 'text' : 'password';
-            toggleIcon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+    
+    showLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
     }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    window.cyberAuth = new CyberAuth();
-});
+    
+    hideLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+    
+    updateAuthUI() {
+        const authSection = document.getElementById('authSection');
+        const loginBtn = document.getElementById('loginBtn');
+        const userInfo = document.getElementById('userInfo');
+        const userName = document.getElementById('userName');
+        const secureNotice = document.getElementById('secureNotice');
+        
+        if (this.isAuthenticated && this.currentUser) {
+            // User is logged in
+            if (authSection) authSection.style.display = 'flex';
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (userInfo) userInfo.style.display = 'flex';
+            if (userName) userName.textContent = this.currentUser.name;
+            if (secureNotice) secureNotice.style.display = 'block';
+        } else {
+            // User is not logged in
+            if (authSection) authSection.style.display = 'flex';
+            if (loginBtn) loginBtn.style.display = 'block';
+            if (userInfo) userInfo.style.display = 'none';
+            if (secureNotice) secureNotice.style.display = 'block';
+        }
+    }
+    
+    logout() {
+        // Clear session
+        if (this.sessionToken) {
+            window.secureStorage.removeSession(this.sessionToken);
+        }
+        
+        // Clear local storage
