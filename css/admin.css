@@ -3789,7 +3789,7 @@ body {
 
 .log-content-header {
     display: flex;
-    justify-content: between;
+    justify-content: space-between;
     align-items: center;
     gap: var(--space-md);
 }
