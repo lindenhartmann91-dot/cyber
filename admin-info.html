@@ -7,119 +7,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .secure-access {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0a0a0f 0%, #000000 100%);
-            padding: 2rem;
-        }
-        .access-container {
-            max-width: 600px;
-            width: 100%;
-            background: rgba(18, 18, 26, 0.95);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
-        }
-        .security-icon {
-            font-size: 4rem;
-            color: var(--accent-red);
-            margin-bottom: 2rem;
-            animation: pulse 2s infinite;
-        }
-        .access-title {
-            color: var(--accent-blue);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .access-message {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        .security-notice {
-            background: rgba(255, 0, 110, 0.1);
-            border: 1px solid var(--accent-red);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        .security-notice h4 {
-            color: var(--accent-red);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .btn-secure {
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-            color: var(--primary-dark);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 6px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        .btn-secure:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.4);
-        }
-        .btn-secondary {
-            background: rgba(0, 243, 255, 0.1);
-            border: 2px solid var(--accent-blue);
-            color: var(--accent-blue);
-        }
-        .btn-secondary:hover {
-            background: rgba(0, 243, 255, 0.2);
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .hidden {
-            display: none;
-        }
-        .admin-content {
-            text-align: left;
-            margin-top: 2rem;
-        }
-        .info-card {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-green);
-        }
-        .credentials {
-            background: #000;
-            padding: 1rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: var(--accent-blue);
-            margin: 0.5rem 0;
-            border: 1px solid var(--border-color);
-        }
-    </style>
 </head>
 <body>
     <div class="secure-access">
@@ -137,7 +24,7 @@
                 <div class="security-notice">
                     <h4><i class="fas fa-exclamation-triangle"></i> SECURITY NOTICE</h4>
                     <p>Access to admin credentials and sensitive information requires:</p>
-                    <ul style="text-align: left; color: var(--text-secondary);">
+                    <ul class="security-notice-list">
                         <li>Valid admin authentication</li>
                         <li>Owner or Co-Owner role permissions</li>
                         <li>Secure session verification</li>
@@ -159,23 +46,23 @@
 
             <!-- Authorized Content (Hidden by default) -->
             <div id="authorized-content" class="hidden admin-content">
-                <h1 style="color: var(--accent-green); text-align: center;">
+                <h1 class="authorized-title">
                     <i class="fas fa-check-circle"></i> AUTHORIZED ACCESS GRANTED
                 </h1>
                 
                 <div class="info-card">
-                    <h3 style="color: var(--accent-blue);">🔑 Admin Credentials</h3>
+                    <h3>🔑 Admin Credentials</h3>
                     <p>Secure admin login information:</p>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div class="credentials-grid">
                         <div>
-                            <h4 style="color: var(--accent-green);">Owner Account</h4>
+                            <h4>Owner Account</h4>
                             <div class="credentials" id="owner-creds">
                                 <!-- Credentials loaded from secure database -->
                             </div>
                         </div>
                         <div>
-                            <h4 style="color: var(--accent-green);">Co-Owner Account</h4>
+                            <h4>Co-Owner Account</h4>
                             <div class="credentials" id="coowner-creds">
                                 <!-- Credentials loaded from secure database -->
                             </div>
@@ -184,15 +71,15 @@
                 </div>
 
                 <div class="info-card">
-                    <h3 style="color: var(--accent-blue);">👥 Staff Information</h3>
+                    <h3>👥 Staff Information</h3>
                     <div id="staff-info">
                         <!-- Staff data loaded from secure database -->
                     </div>
                 </div>
 
                 <div class="info-card">
-                    <h3 style="color: var(--accent-blue);">🔧 Admin Tools</h3>
-                    <div class="auth-buttons" style="justify-content: flex-start;">
+                    <h3>🔧 Admin Tools</h3>
+                    <div class="auth-buttons auth-buttons-left">
                         <a href="admin-dashboard.html" class="btn-secure">
                             <i class="fas fa-tachometer-alt"></i>
                             ADMIN DASHBOARD
