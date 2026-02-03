@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel | Admin Login</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+    <div class="login-container">
+        <div class="login-header cyber-border">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                CYBER<span>SENTINEL</span>
+            </div>
+            <h1>ADMIN PORTAL</h1>
+            <p class="subtitle">// RESTRICTED ACCESS //</p>
+        </div>
+        
+        <div class="login-form cyber-border">
+            <div class="auth-message" id="authMessage"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user-secret"></i> ADMIN ID
+                    </label>
+                    <input type="text" id="username" name="username" placeholder="Enter admin ID" required>
+                    <div class="input-hint">Format: admin_xxxx</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-key"></i> ACCESS CODE
+                    </label>
+                    <input type="password" id="password" name="password" placeholder="Enter access code" required>
+                    <div class="password-toggle">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="twoFactor">
+                        <i class="fas fa-fingerprint"></i> 2FA TOKEN
+                    </label>
+                    <input type="text" id="twoFactor" name="twoFactor" placeholder="6-digit code (optional)" maxlength="6">
+                </div>
+                
+                <button type="submit" class="btn btn-primary auth-btn">
+                    <i class="fas fa-sign-in-alt"></i> AUTHENTICATE
+                </button>
+            </form>
+            
+            <div class="security-notice">
+                <h4><i class="fas fa-exclamation-triangle"></i> SECURITY NOTICE</h4>
+                <p>This portal is protected by multiple security layers. All login attempts are logged and monitored.</p>
+                <div class="security-status">
+                    <span class="status-indicator secure"></span>
+                    <span>ENCRYPTION: ACTIVE</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-footer">
+            <p><i class="fas fa-lock"></i> RESTRICTED AREA • UNAUTHORIZED ACCESS PROHIBITED</p>
+            <p class="copyright">CyberSentinel Admin System v2.6 • © 2026</p>
+        </div>
+    </div>
+    
+    <script src="js/auth.js"></script>
+</body>
+</html>
