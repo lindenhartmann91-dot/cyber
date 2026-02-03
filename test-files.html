@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a24;
+            color: #fff;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: rgba(0,255,157,0.2); border: 1px solid #00ff9d; }
+        .error { background: rgba(255,0,110,0.2); border: 1px solid #ff006e; }
+        .loading { background: rgba(0,243,255,0.2); border: 1px solid #00f3ff; }
+    </style>
+</head>
+<body>
+    <h1>🔍 File Loading Test</h1>
+    <p>This page will test if your CSS and JS files are loading correctly.</p>
+    
+    <div id="results">
+        <div class="test-result loading">Testing file accessibility...</div>
+    </div>
+
+    <h2>Manual Tests:</h2>
+    <ol>
+        <li><strong>CSS Test:</strong> If this page has dark background and colored borders, basic CSS is working.</li>
+        <li><strong>Font Awesome Test:</strong> <i class="fas fa-shield-alt"></i> ← Should show a shield icon</li>
+        <li><strong>JavaScript Test:</strong> Check below for results</li>
+    </ol>
+
+    <div id="jsTest" class="test-result loading">JavaScript test running...</div>
+
+    <!-- Test CSS loading -->
+    <link rel="stylesheet" href="css/style.css" onload="cssLoaded()" onerror="cssError()">
+    <link rel="stylesheet" href="css/admin.css" onload="adminCssLoaded()" onerror="adminCssError()">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" onload="fontAwesomeLoaded()" onerror="fontAwesomeError()">
+
+    <script>
+        let testResults = [];
+        
+        function addResult(test, status, message) {
+            testResults.push({test, status, message});
+            updateResults();
+        }
+        
+        function updateResults() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = testResults.map(result => 
+                `<div class="test-result ${result.status}">
+                    <strong>${result.test}:</strong> ${result.message}
+                </div>`
+            ).join('');
+        }
+        
+        // CSS loading tests
+        function cssLoaded() {
+            addResult('Main CSS', 'success', 'css/style.css loaded successfully');
+        }
+        
+        function cssError() {
+            addResult('Main CSS', 'error', 'css/style.css failed to load - check if file exists');
+        }
+        
+        function adminCssLoaded() {
+            addResult('Admin CSS', 'success', 'css/admin.css loaded successfully');
+        }
+        
+        function adminCssError() {
+            addResult('Admin CSS', 'error', 'css/admin.css failed to load - check if file exists');
+        }
+        
+        function fontAwesomeLoaded() {
+            addResult('Font Awesome', 'success', 'Font Awesome loaded successfully');
+        }
+        
+        function fontAwesomeError() {
+            addResult('Font Awesome', 'error', 'Font Awesome failed to load - check internet connection');
+        }
+        
+        // JavaScript loading tests
+        function testJavaScript() {
+            const jsTest = document.getElementById('jsTest');
+            
+            // Test if we can load JS files
+            const scripts = [
+                'js/config.js',
+                'js/main.js',
+                'js/admin.js'
+            ];
+            
+            let loadedScripts = 0;
+            let failedScripts = [];
+            
+            scripts.forEach(scriptSrc => {
+                const script = document.createElement('script');
+                script.src = scriptSrc;
+                
+                script.onload = function() {
+                    loadedScripts++;
+                    addResult(`JS: ${scriptSrc}`, 'success', 'Loaded successfully');
+                    
+                    if (loadedScripts + failedScripts.length === scripts.length) {
+                        finishJSTest();
+                    }
+                };
+                
+                script.onerror = function() {
+                    failedScripts.push(scriptSrc);
+                    addResult(`JS: ${scriptSrc}`, 'error', 'Failed to load - check if file exists');
+                    
+                    if (loadedScripts + failedScripts.length === scripts.length) {
+                        finishJSTest();
+                    }
+                };
+                
+                document.head.appendChild(script);
+            });
+        }
+        
+        function finishJSTest() {
+            const jsTest = document.getElementById('jsTest');
+            if (testResults.filter(r => r.test.startsWith('JS:') && r.status === 'success').length > 0) {
+                jsTest.className = 'test-result success';
+                jsTest.innerHTML = '<strong>JavaScript Test:</strong> Some JS files loaded successfully';
+            } else {
+                jsTest.className = 'test-result error';
+                jsTest.innerHTML = '<strong>JavaScript Test:</strong> No JS files could be loaded';
+            }
+        }
+        
+        // Run tests
+        setTimeout(testJavaScript, 1000);
+        
+        // Test current page functionality
+        setTimeout(() => {
+            addResult('Page JavaScript', 'success', 'This test page JavaScript is working');
+        }, 500);
+    </script>
+</body>
+</html>

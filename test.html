@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0f;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #12121a;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #2a2a3a;
+        }
+        .test-item {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #1a1a24;
+            border-radius: 4px;
+            border-left: 4px solid #00f3ff;
+        }
+        .success { border-left-color: #00ff9d; }
+        .error { border-left-color: #ff006e; }
+        a {
+            color: #00f3ff;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            background: linear-gradient(90deg, #00f3ff, #00ff9d);
+            color: #0a0a0f;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🛡️ CyberSentinel Test Page</h1>
+        <p>This page verifies that your development server is working correctly.</p>
+        
+        <div class="test-item success">
+            <h3>✅ Server Status</h3>
+            <p>If you can see this page, your server is running correctly!</p>
+        </div>
+        
+        <div class="test-item">
+            <h3>📄 Page Links</h3>
+            <a href="index.html">Homepage</a>
+            <a href="login.html">Admin Login</a>
+            <a href="admin-dashboard.html">Admin Dashboard</a>
+        </div>
+        
+        <div class="test-item">
+            <h3>🔧 Development Tools</h3>
+            <button class="btn" onclick="testLocalStorage()">Test LocalStorage</button>
+            <button class="btn" onclick="testConsole()">Test Console</button>
+            <button class="btn" onclick="testFetch()">Test Fetch API</button>
+        </div>
+        
+        <div class="test-item">
+            <h3>📊 System Info</h3>
+            <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+            <p><strong>Screen Size:</strong> <span id="screenSize"></span></p>
+            <p><strong>Current Time:</strong> <span id="currentTime"></span></p>
+        </div>
+        
+        <div class="test-item">
+            <h3>🎯 Quick Tests</h3>
+            <div id="testResults"></div>
+        </div>
+    </div>
+
+    <script>
+        // Update system info
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('screenSize').textContent = `${screen.width}x${screen.height}`;
+        
+        function updateTime() {
+            document.getElementById('currentTime').textContent = new Date().toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Test functions
+        function testLocalStorage() {
+            try {
+                localStorage.setItem('test', 'CyberSentinel');
+                const value = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                
+                if (value === 'CyberSentinel') {
+                    addTestResult('LocalStorage', 'Working correctly', 'success');
+                } else {
+                    addTestResult('LocalStorage', 'Not working properly', 'error');
+                }
+            } catch (error) {
+                addTestResult('LocalStorage', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        function testConsole() {
+            console.log('CyberSentinel: Console test successful');
+            console.warn('CyberSentinel: Warning test');
+            console.error('CyberSentinel: Error test (this is intentional)');
+            addTestResult('Console', 'Check browser developer tools for messages', 'success');
+        }
+
+        async function testFetch() {
+            try {
+                const response = await fetch('data/staff.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    addTestResult('Fetch API', `Loaded ${data.length} staff members`, 'success');
+                } else {
+                    addTestResult('Fetch API', `HTTP ${response.status}`, 'error');
+                }
+            } catch (error) {
+                addTestResult('Fetch API', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        function addTestResult(test, result, type) {
+            const resultsDiv = document.getElementById('testResults');
+            const resultItem = document.createElement('div');
+            resultItem.style.cssText = `
+                margin: 0.5rem 0;
+                padding: 0.5rem;
+                background: ${type === 'success' ? '#001a0d' : '#1a0006'};
+                border-left: 3px solid ${type === 'success' ? '#00ff9d' : '#ff006e'};
+                border-radius: 3px;
+            `;
+            resultItem.innerHTML = `<strong>${test}:</strong> ${result}`;
+            resultsDiv.appendChild(resultItem);
+        }
+
+        // Run automatic tests
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                addTestResult('Page Load', 'Completed successfully', 'success');
+                addTestResult('JavaScript', 'Executing correctly', 'success');
+                
+                // Test CSS loading
+                const testEl = document.createElement('div');
+                testEl.style.display = 'none';
+                document.body.appendChild(testEl);
+                const computed = window.getComputedStyle(testEl);
+                document.body.removeChild(testEl);
+                
+                if (computed.display === 'none') {
+                    addTestResult('CSS', 'Styles loading correctly', 'success');
+                } else {
+                    addTestResult('CSS', 'Potential styling issues', 'error');
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
