@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel | Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Admin Sidebar -->
+    <div class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="admin-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>CYBER<span>SENTINEL</span></span>
+            </div>
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="admin-info">
+                    <h4 id="adminName">Loading...</h4>
+                    <span class="admin-role" id="adminRole">Administrator</span>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="staff">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Staff Management</span>
+                        <span class="nav-badge" id="staffCount">0</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="contacts">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Messages</span>
+                        <span class="nav-badge" id="messageCount">0</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="chatlogs">
+                        <i class="fas fa-terminal"></i>
+                        <span>Chat Logs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="merch">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Merch Store</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item" data-section="logs">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Activity Logs</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="system-status">
+                <span class="status-indicator online"></span>
+                <span>SYSTEM: ONLINE</span>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> LOGOUT
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="topbar-right">
+                <div class="quick-stats">
+                    <div class="stat">
+                        <span class="stat-label">ACTIVE USERS</span>
+                        <span class="stat-value" id="activeUsers">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">PENDING</span>
+                        <span class="stat-value" id="pendingItems">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">THREAT LEVEL</span>
+                        <span class="stat-value threat-low">LOW</span>
+                    </div>
+                </div>
+                
+                <div class="admin-controls">
+                    <button class="control-btn" id="refreshBtn" title="Refresh Data">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="control-btn" id="notificationsBtn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="admin-time" id="currentTime">00:00:00 UTC</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div class="admin-content">
+            <!-- Dashboard Section -->
+            <section id="dashboardSection" class="content-section active">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card cyber-border">
+                        <h3><i class="fas fa-chart-line"></i> OVERVIEW</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-number" id="totalStaff">0</span>
+                                <span class="stat-label">TOTAL STAFF</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="totalMessages">0</span>
+                                <span class="stat-label">MESSAGES</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="onlineStaff">0</span>
+                                <span class="stat-label">ONLINE NOW</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number" id="casesToday">0</span>
+                                <span class="stat-label">CASES TODAY</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card cyber-border">
+                        <h3><i class="fas fa-user-clock"></i> RECENT ACTIVITY</h3>
+                        <div class="activity-list" id="recentActivity">
+                            <!-- Activities will load here -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card cyber-border">
+                        <h3><i class="fas fa-exclamation-circle"></i> ALERTS</h3>
+                        <div class="alerts-container" id="alertsContainer">
+                            <!-- Alerts will load here -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card cyber-border">
+                        <h3><i class="fas fa-tools"></i> QUICK ACTIONS</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" data-action="addStaff">
+                                <i class="fas fa-user-plus"></i>
+                                Add Staff Member
+                            </button>
+                            <button class="action-btn" data-action="viewLogs">
+                                <i class="fas fa-file-alt"></i>
+                                View Activity Logs
+                            </button>
+                            <button class="action-btn" data-action="backupData">
+                                <i class="fas fa-database"></i>
+                                Backup Data
+                            </button>
+                            <button class="action-btn" data-action="systemCheck">
+                                <i class="fas fa-server"></i>
+                                System Check
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Staff Management Section -->
+            <section id="staffSection" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users-cog"></i> STAFF MANAGEMENT</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="addStaffBtn">
+                            <i class="fas fa-plus"></i> ADD STAFF
+                        </button>
+                        <button class="btn btn-secondary" id="exportStaffBtn">
+                            <i class="fas fa-download"></i> EXPORT
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="staff-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="staffSearch" placeholder="Search staff by name, role, or Discord...">
+                    </div>
+                    
+                    <div class="filter-controls">
+                        <select id="roleFilter" class="filter-select">
+                            <option value="all">All Roles</option>
+                            <option value="owner">Owner</option>
+                            <option value="co-owner">Co-Owner</option>
+                            <option value="manager">Manager</option>
+                            <option value="admin">Admin</option>
+                            <option value="moderator">Moderator</option>
+                            <option value="security">Security</option>
+                        </select>
+                        
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="staff-table-container cyber-border">
+                    <table class="staff-table" id="staffTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll"></th>
+                                <th>NAME</th>
+                                <th>ROLE</th>
+                                <th>DISCORD</th>
+                                <th>STATUS</th>
+                                <th>JOIN DATE</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTableBody">
+                            <!-- Staff data will load here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="table-footer">
+                    <div class="bulk-actions">
+                        <select id="bulkAction" class="bulk-select">
+                            <option value="">Bulk Actions</option>
+                            <option value="activate">Activate Selected</option>
+                            <option value="deactivate">Deactivate Selected</option>
+                            <option value="promote">Promote Selected</option>
+                            <option value="demote">Demote Selected</option>
+                            <option value="delete">Delete Selected</option>
+                        </select>
+                        <button class="btn btn-danger" id="applyBulkAction">APPLY</button>
+                    </div>
+                    
+                    <div class="pagination" id="staffPagination">
+                        <!-- Pagination will be generated here -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Contact Messages Section -->
+            <section id="contactsSection" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-envelope"></i> CONTACT MESSAGES</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-danger" id="deleteAllMessages">
+                            <i class="fas fa-trash"></i> DELETE ALL
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="messages-controls">
+                    <div class="message-filters">
+                        <button class="filter-btn active" data-type="all">All</button>
+                        <button class="filter-btn" data-type="tip">Tips</button>
+                        <button class="filter-btn" data-type="general">General</button>
+                        <button class="filter-btn" data-type="support">Support</button>
+                        <button class="filter-btn" data-type="urgent">Urgent</button>
+                        <button class="filter-btn" data-type="unread">Unread</button>
+                    </div>
+                    
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="messageSearch" placeholder="Search messages...">
+                    </div>
+                </div>
+                
+                <div class="messages-container">
+                    <div class="messages-list cyber-border">
+                        <div class="messages-header">
+                            <h4>MESSAGES LIST</h4>
+                            <span class="count-badge" id="messagesCount">0 messages</span>
+                        </div>
+                        <div class="messages-scroll" id="messagesList">
+                            <!-- Messages will load here -->
+                        </div>
+                    </div>
+                    
+                    <div class="message-detail cyber-border">
+                        <div class="message-header">
+                            <h4>MESSAGE DETAIL</h4>
+                            <div class="message-actions">
+                                <button class="action-btn" id="replyBtn" title="Reply">
+                                    <i class="fas fa-reply"></i>
+                                </button>
+                                <button class="action-btn" id="deleteMessageBtn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button class="action-btn" id="markReadBtn" title="Mark as Read">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="message-content" id="messageDetail">
+                            <div class="no-selection">
+                                <i class="fas fa-envelope-open"></i>
+                                <p>Select a message to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Chat Logs Section -->
+            <section id="chatlogsSection" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-terminal"></i> CHAT LOGS</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="uploadLogsBtn">
+                            <i class="fas fa-upload"></i> UPLOAD LOGS
+                        </button>
+                        <button class="btn btn-secondary" id="exportLogsBtn">
+                            <i class="fas fa-download"></i> EXPORT
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chatlogs-container">
+                    <!-- Chat logs interface will be here -->
+                </div>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settingsSection" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> SYSTEM SETTINGS</h2>
+                </div>
+                
+                <div class="settings-container">
+                    <!-- Settings interface will be here -->
+                </div>
+            </section>
+            
+            <!-- Activity Logs Section -->
+            <section id="logsSection" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-list"></i> ACTIVITY LOGS</h2>
+                </div>
+                
+                <div class="logs-container">
+                    <!-- Activity logs interface will be here -->
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- Modal for Add/Edit Staff -->
+    <div class="modal" id="staffModal">
+        <div class="modal-content cyber-border">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Staff Member</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="staffForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="staffName">Full Name *</label>
+                            <input type="text" id="staffName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="staffDiscord">Discord Username *</label>
+                            <input type="text" id="staffDiscord" name="discord" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="staffRole">Role *</label>
+                            <select id="staffRole" name="role" required>
+                                <option value="owner">Owner</option>
+                                <option value="co-owner">Co-Owner</option>
+                                <option value="manager">Manager</option>
+                                <option value="admin">Admin</option>
+                                <option value="moderator">Moderator</option>
+                                <option value="security">Security</option>
+                                <option value="family">Family</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="staffStatus">Status</label>
+                            <select id="staffStatus" name="status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="staffBio">Bio/Description</label>
+                        <textarea id="staffBio" name="bio" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="staffPermissions">Permissions</label>
+                        <div class="permissions-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="permissions[]" value="view_logs">
+                                View Chat Logs
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="permissions[]" value="manage_staff">
+                                Manage Staff
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="permissions[]" value="view_contacts">
+                                View Contacts
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="permissions[]" value="post_alerts">
+                                Post Alerts
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveStaffBtn">Save Staff</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/admin.js"></script>
+</body>
+</html>
