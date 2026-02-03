@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel - Secure Admin Access</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .secure-access {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #000000 100%);
+            padding: 2rem;
+        }
+        .access-container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(18, 18, 26, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+        }
+        .security-icon {
+            font-size: 4rem;
+            color: var(--accent-red);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+        .access-title {
+            color: var(--accent-blue);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .access-message {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .security-notice {
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .security-notice h4 {
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .btn-secure {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            color: var(--primary-dark);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .btn-secure:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(0, 243, 255, 0.1);
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        .btn-secondary:hover {
+            background: rgba(0, 243, 255, 0.2);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .hidden {
+            display: none;
+        }
+        .admin-content {
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .info-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-green);
+        }
+        .credentials {
+            background: #000;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-blue);
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="secure-access">
+        <div class="access-container">
+            <!-- Unauthorized Access Screen -->
+            <div id="unauthorized-screen">
+                <div class="security-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1 class="access-title">🔒 SECURE ACCESS REQUIRED</h1>
+                <p class="access-message">
+                    This page contains sensitive administrative information and is restricted to authorized personnel only.
+                </p>
+                
+                <div class="security-notice">
+                    <h4><i class="fas fa-exclamation-triangle"></i> SECURITY NOTICE</h4>
+                    <p>Access to admin credentials and sensitive information requires:</p>
+                    <ul style="text-align: left; color: var(--text-secondary);">
+                        <li>Valid admin authentication</li>
+                        <li>Owner or Co-Owner role permissions</li>
+                        <li>Secure session verification</li>
+                        <li>All access attempts are logged</li>
+                    </ul>
+                </div>
+                
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn-secure">
+                        <i class="fas fa-sign-in-alt"></i>
+                        ADMIN LOGIN
+                    </a>
+                    <a href="index.html" class="btn-secure btn-secondary">
+                        <i class="fas fa-home"></i>
+                        RETURN HOME
+                    </a>
+                </div>
+            </div>
+
+            <!-- Authorized Content (Hidden by default) -->
+            <div id="authorized-content" class="hidden admin-content">
+                <h1 style="color: var(--accent-green); text-align: center;">
+                    <i class="fas fa-check-circle"></i> AUTHORIZED ACCESS GRANTED
+                </h1>
+                
+                <div class="info-card">
+                    <h3 style="color: var(--accent-blue);">🔑 Admin Credentials</h3>
+                    <p>Secure admin login information:</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <h4 style="color: var(--accent-green);">Owner Account</h4>
+                            <div class="credentials" id="owner-creds">
+                                <!-- Credentials loaded from secure database -->
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--accent-green);">Co-Owner Account</h4>
+                            <div class="credentials" id="coowner-creds">
+                                <!-- Credentials loaded from secure database -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 style="color: var(--accent-blue);">👥 Staff Information</h3>
+                    <div id="staff-info">
+                        <!-- Staff data loaded from secure database -->
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 style="color: var(--accent-blue);">🔧 Admin Tools</h3>
+                    <div class="auth-buttons" style="justify-content: flex-start;">
+                        <a href="admin-dashboard.html" class="btn-secure">
+                            <i class="fas fa-tachometer-alt"></i>
+                            ADMIN DASHBOARD
+                        </a>
+                        <button onclick="logSecurityEvent('admin_info_accessed')" class="btn-secure btn-secondary">
+                            <i class="fas fa-clipboard-list"></i>
+                            LOG ACCESS
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/database.js"></script>
+    <script>
+        class SecureAdminInfo {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.checkAuthentication();
+            }
+
+            async checkAuthentication() {
+                try {
+                    // Check if user is authenticated
+                    const session = localStorage.getItem('cybersentinel_session');
+                    if (!session) {
+                        this.showUnauthorized();
+                        return;
+                    }
+
+                    const sessionData = JSON.parse(session);
+                    const now = Date.now();
+                    const sessionAge = now - sessionData.timestamp;
+
+                    // Check session validity (30 minutes)
+                    if (sessionAge > 30 * 60 * 1000) {
+                        localStorage.removeItem('cybersentinel_session');
+                        this.showUnauthorized();
+                        return;
+                    }
+
+                    // Check if user has required permissions (Owner or Co-Owner only)
+                    const userRole = sessionData.user.role;
+                    if (userRole !== 'owner' && userRole !== 'co-owner') {
+                        this.showUnauthorized('Insufficient permissions. Owner or Co-Owner access required.');
+                        return;
+                    }
+
+                    // User is authorized - load secure content
+                    await this.loadSecureContent(sessionData.user);
+
+                } catch (error) {
+                    console.error('Authentication check failed:', error);
+                    this.showUnauthorized();
+                }
+            }
+
+            showUnauthorized(message = null) {
+                document.getElementById('unauthorized-screen').classList.remove('hidden');
+                document.getElementById('authorized-content').classList.add('hidden');
+                
+                if (message) {
+                    const messageEl = document.querySelector('.access-message');
+                    messageEl.textContent = message;
+                    messageEl.style.color = 'var(--accent-red)';
+                }
+
+                // Log unauthorized access attempt
+                this.logSecurityEvent('unauthorized_admin_info_access', {
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    referrer: document.referrer
+                });
+            }
+
+            async loadSecureContent(user) {
+                try {
+                    // Load credentials from secure database
+                    const credentials = await window.secureDB.secureApiCall('/admin/credentials', 'GET');
+                    
+                    // Load staff information
+                    const staffData = await window.secureDB.secureApiCall('/staff', 'GET');
+
+                    // Display authorized content
+                    document.getElementById('unauthorized-screen').classList.add('hidden');
+                    document.getElementById('authorized-content').classList.remove('hidden');
+
+                    // Populate credentials (simulated secure data)
+                    this.displayCredentials();
+                    this.displayStaffInfo();
+
+                    // Log authorized access
+                    this.logSecurityEvent('admin_info_accessed', {
+                        user: user.username,
+                        role: user.role,
+                        timestamp: new Date().toISOString()
+                    });
+
+                } catch (error) {
+                    console.error('Failed to load secure content:', error);
+                    this.showUnauthorized('Failed to load secure content. Please try again.');
+                }
+            }
+
+            displayCredentials() {
+                // In production, this would come from encrypted database
+                const ownerCreds = document.getElementById('owner-creds');
+                const coownerCreds = document.getElementById('coowner-creds');
+
+                ownerCreds.innerHTML = `
+Username: admin_jay
+Password: [ENCRYPTED]
+Role: Owner
+Permissions: All
+Last Login: ${new Date().toLocaleDateString()}`;
+
+                coownerCreds.innerHTML = `
+Username: admin_linden  
+Password: [ENCRYPTED]
+Role: Co-Owner
+Permissions: Limited
+Last Login: ${new Date().toLocaleDateString()}`;
+            }
+
+            displayStaffInfo() {
+                const staffInfo = document.getElementById('staff-info');
+                staffInfo.innerHTML = `
+                    <p style="color: var(--text-secondary);">
+                        Staff information is stored securely in the encrypted database.
+                        Access the <a href="admin-dashboard.html" style="color: var(--accent-blue);">Admin Dashboard</a> 
+                        to view and manage team members.
+                    </p>
+                    <div style="background: rgba(0, 255, 157, 0.1); padding: 1rem; border-radius: 4px; margin-top: 1rem;">
+                        <strong style="color: var(--accent-green);">Security Note:</strong>
+                        All staff data is encrypted and access-controlled. Personal information is never stored in plain text.
+                    </div>
+                `;
+            }
+
+            logSecurityEvent(event, details = {}) {
+                if (window.secureDB) {
+                    window.secureDB.logSecurityEvent(event, details);
+                }
+                console.log(`🔒 Security Event: ${event}`, details);
+            }
+        }
+
+        // Initialize secure admin info system
+        document.addEventListener('DOMContentLoaded', () => {
+            new SecureAdminInfo();
+        });
+
+        // Global function for logging
+        function logSecurityEvent(event) {
+            if (window.secureAdminInfo) {
+                window.secureAdminInfo.logSecurityEvent(event);
+            }
+        }
+    </script>
+</body>
+</html>

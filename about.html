@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberSentinel | ExposingWithJay</title>
+    <title>About CyberSentinel | ExposingWithJay</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <!-- Google Sign-In SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-    <!-- Header with Login Button -->
+    <!-- Header -->
     <header>
         <nav>
             <div class="logo">
@@ -22,14 +20,12 @@
             
             <div class="nav-right">
                 <ul class="nav-links">
-                    <li><a href="index.html" class="active">HOME</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html" class="active">ABOUT</a></li>
                     <li><a href="mission.html">MISSION</a></li>
                     <li><a href="contact.html">CONTACT</a></li>
-                    <li><a href="locals.html">LOCALS</a></li>
                 </ul>
                 
-                <!-- Secure Login Button (Only visible to authorized users) -->
                 <div id="authSection" class="auth-section">
                     <button id="loginBtn" class="btn btn-primary login-btn">
                         <i class="fas fa-lock"></i> ADMIN LOGIN
@@ -52,118 +48,161 @@
     <!-- Main Content -->
     <main class="container">
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="page-hero">
             <div class="hero cyber-border">
                 <div class="system-status">
                     <div class="status-line">
-                        <span class="label">// SYSTEM INITIALIZED //</span>
+                        <span class="label">// ABOUT CYBERSENTINEL //</span>
                         <span class="timestamp" id="currentTime">[00:00:00 UTC]</span>
                     </div>
-                    <div class="status-display">
-                        <span class="system-name">CYBERSENTINEL v2.6</span>
-                        <div class="status-badges">
-                            <span class="badge active">ACTIVE</span>
-                            <span class="badge secure">ENCRYPTED</span>
-                            <span class="badge vigilant">VIGILANT</span>
+                </div>
+                
+                <h1 class="hero-title">About<span>CyberSentinel</span></h1>
+                <p class="hero-subtitle">Protecting children in the digital age through investigation, education, and community action.</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="about-content">
+            <div class="about-grid">
+                <div class="about-card cyber-border">
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>We expose online predators who target children, working tirelessly to make the internet a safer place for our youth. Every investigation matters, every child protected counts.</p>
+                    <a href="mission.html" class="btn btn-secondary">Learn More</a>
+                </div>
+                
+                <div class="about-card cyber-border">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Our Team</h3>
+                    <p>A dedicated group of volunteers, investigators, and advocates working together to combat online predators and protect vulnerable children from harm.</p>
+                    <div class="team-stats">
+                        <div class="stat">
+                            <span class="stat-number">14</span>
+                            <span class="stat-label">Team Members</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">Cases Resolved</span>
                         </div>
                     </div>
                 </div>
                 
-                <h1 class="hero-title">Exposing<span>WithJay</span></h1>
-                <p class="hero-subtitle">Protecting children online and exposing predators. Follow Jay's investigations and educational content.</p>
-                
-                <div class="hero-buttons">
-                    <a href="https://youtube.com/@ExposingWithJay" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-youtube"></i> WATCH ON YOUTUBE
-                    </a>
-                    <a href="https://www.tiktok.com/@.exposingwithjay" target="_blank" class="btn btn-secondary">
-                        <i class="fab fa-tiktok"></i> FOLLOW ON TIKTOK
-                    </a>
+                <div class="about-card cyber-border">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Our Methods</h3>
+                    <p>Using advanced digital investigation techniques, we identify, document, and report predatory behavior to appropriate authorities while maintaining strict ethical standards.</p>
+                    <ul class="method-list">
+                        <li><i class="fas fa-check"></i> Digital forensics</li>
+                        <li><i class="fas fa-check"></i> Evidence documentation</li>
+                        <li><i class="fas fa-check"></i> Law enforcement cooperation</li>
+                        <li><i class="fas fa-check"></i> Community education</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Content Section -->
-        <section class="content-section">
-            <div class="content-grid">
-                <!-- YouTube Section -->
-                <div class="content-card cyber-border">
-                    <div class="card-header">
-                        <i class="fab fa-youtube"></i>
-                        <h3>Latest YouTube Videos</h3>
+        <!-- Story Section -->
+        <section class="story-section">
+            <div class="story-content cyber-border">
+                <h2>Our Story</h2>
+                <div class="story-grid">
+                    <div class="story-text">
+                        <h3>Founded by Jay</h3>
+                        <p>CyberSentinel was founded by Jay, also known as ExposingWithJay, with a simple but powerful mission: to protect children from online predators. What started as individual investigations has grown into a coordinated team effort.</p>
+                        
+                        <h3>Growing the Team</h3>
+                        <p>Joined by his brother Linden as co-owner, the organization has expanded to include managers, administrators, moderators, and security specialists, all united by the common goal of child protection.</p>
+                        
+                        <h3>Making an Impact</h3>
+                        <p>Through careful investigation and collaboration with law enforcement, CyberSentinel has helped resolve over 147 cases and continues to work tirelessly to make the internet safer for children.</p>
                     </div>
-                    <div class="video-container">
-                        <!-- Placeholder for YouTube embed -->
-                        <div class="video-placeholder">
-                            <i class="fab fa-youtube"></i>
-                            <p>Subscribe to ExposingWithJay on YouTube for the latest investigations and educational content about online safety.</p>
-                            <a href="https://youtube.com/@ExposingWithJay" target="_blank" class="btn btn-primary">
-                                <i class="fab fa-youtube"></i> Subscribe Now
-                            </a>
+                    
+                    <div class="story-stats">
+                        <div class="stat-card cyber-border">
+                            <h4>Founded</h4>
+                            <span class="stat-big">2025</span>
+                        </div>
+                        
+                        <div class="stat-card cyber-border">
+                            <h4>Team Size</h4>
+                            <span class="stat-big">14+</span>
+                        </div>
+                        
+                        <div class="stat-card cyber-border">
+                            <h4>Cases</h4>
+                            <span class="stat-big">5+</span>
+                        </div>
+                        
+                        <div class="stat-card cyber-border">
+                            <h4>Communities</h4>
+                            <span class="stat-big">1</span>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- TikTok Section -->
-                <div class="content-card cyber-border">
-                    <div class="card-header">
-                        <i class="fab fa-tiktok"></i>
-                        <h3>TikTok Content</h3>
-                    </div>
-                    <div class="tiktok-container">
-                        <div class="tiktok-placeholder">
-                            <i class="fab fa-tiktok"></i>
-                            <p>Follow @exposingwithjay on TikTok for quick safety tips, awareness content, and community updates.</p>
-                            <a href="https://www.tiktok.com/@.exposingwithjay" target="_blank" class="btn btn-secondary">
-                                <i class="fab fa-tiktok"></i> Follow on TikTok
-                            </a>
-                        </div>
-                    </div>
+        <!-- Values Section -->
+        <section class="values-section">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card cyber-border">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Justice</h3>
+                    <p>We believe in holding predators accountable for their actions and ensuring justice for victims.</p>
                 </div>
-
-                <!-- Discord Community -->
-                <div class="content-card cyber-border">
-                    <div class="card-header">
-                        <i class="fab fa-discord"></i>
-                        <h3>Join Our Community</h3>
-                    </div>
-                    <div class="discord-container">
-                        <div class="discord-info">
-                            <i class="fab fa-discord"></i>
-                            <p>Connect with our community of advocates and parents working together to keep children safe online.</p>
-                            <a href="https://discord.gg/X3gNgdNhyz" target="_blank" class="btn btn-secondary">
-                                <i class="fab fa-discord"></i> Join Discord
-                            </a>
-                        </div>
-                    </div>
+                
+                <div class="value-card cyber-border">
+                    <i class="fas fa-heart"></i>
+                    <h3>Compassion</h3>
+                    <p>We approach every case with empathy and understanding for the victims and their families.</p>
                 </div>
+                
+                <div class="value-card cyber-border">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Protection</h3>
+                    <p>Child safety is our top priority in everything we do, from investigations to community outreach.</p>
+                </div>
+                
+                <div class="value-card cyber-border">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Collaboration</h3>
+                    <p>We work closely with law enforcement, other organizations, and communities to maximize our impact.</p>
+                </div>
+                
+                <div class="value-card cyber-border">
+                    <i class="fas fa-eye"></i>
+                    <h3>Transparency</h3>
+                    <p>We maintain transparency in our methods while protecting the privacy of victims and ongoing investigations.</p>
+                </div>
+                
+                <div class="value-card cyber-border">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Education</h3>
+                    <p>We believe in educating communities about online safety to prevent future victimization.</p>
+                </div>
+            </div>
+        </section>
 
-                <!-- Quick Links -->
-                <div class="content-card cyber-border">
-                    <div class="card-header">
-                        <i class="fas fa-link"></i>
-                        <h3>Quick Links</h3>
-                    </div>
-                    <div class="links-container">
-                        <div class="quick-links">
-                            <a href="about.html" class="quick-link">
-                                <i class="fas fa-info-circle"></i>
-                                <span>About Us</span>
-                            </a>
-                            <a href="mission.html" class="quick-link">
-                                <i class="fas fa-bullseye"></i>
-                                <span>Our Mission</span>
-                            </a>
-                            <a href="contact.html" class="quick-link">
-                                <i class="fas fa-envelope"></i>
-                                <span>Contact</span>
-                            </a>
-                            <a href="admin-info.html" class="quick-link">
-                                <i class="fas fa-cog"></i>
-                                <span>Admin Info</span>
-                            </a>
-                        </div>
-                    </div>
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <div class="cta-content cyber-border">
+                <h2>Join Our Mission</h2>
+                <p>Help us make the internet safer for children. Whether you want to report suspicious activity, volunteer, or simply spread awareness, every action counts.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </a>
+                    <a href="https://discord.gg/X3gNqdNhyz" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
                 </div>
             </div>
         </section>
@@ -184,7 +223,6 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="mission.html">Mission</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="locals.html">Locals</a></li>
                 </ul>
             </div>
             
@@ -236,29 +274,6 @@
             </div>
             <div class="modal-body">
                 <div class="auth-message" id="authMessage"></div>
-                
-                <!-- Google Sign-In -->
-                <div class="auth-option">
-                    <h4><i class="fab fa-google"></i> SIGN IN WITH GOOGLE</h4>
-                    <div id="g_id_onload"
-                        data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                        data-login_uri="https://yourdomain.com/auth/google"
-                        data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin"
-                        data-type="standard"
-                        data-size="large"
-                        data-theme="filled_blue"
-                        data-text="signin_with"
-                        data-shape="rectangular"
-                        data-logo_alignment="left">
-                    </div>
-                    <p class="auth-note">Approved Google accounts only</p>
-                </div>
-                
-                <div class="auth-divider">
-                    <span>OR</span>
-                </div>
                 
                 <!-- Manual Admin Login -->
                 <div class="auth-option">
