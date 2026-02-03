@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSentinel | Local Communities</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                CYBER<span>SENTINEL</span>
+            </div>
+            
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="mission.html">MISSION</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                    <li><a href="locals.html" class="active">LOCALS</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero cyber-border">
+                <div class="system-status">
+                    <div class="status-line">
+                        <span class="label">// LOCAL COMMUNITIES NETWORK //</span>
+                        <span class="timestamp" id="currentTime">[00:00:00 UTC]</span>
+                    </div>
+                    <div class="status-display">
+                        <span class="system-name">COMMUNITY OUTREACH v1.0</span>
+                        <div class="status-badges">
+                            <span class="badge active">ACTIVE</span>
+                            <span class="badge secure">VERIFIED</span>
+                            <span class="badge vigilant">PROTECTED</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h1 class="hero-title">Local<span>Communities</span></h1>
+                <p class="hero-subtitle">Connect with local advocates, parents, and community leaders working together to protect children in your area.</p>
+            </div>
+        </section>
+
+        <!-- Community Search -->
+        <section class="search-section">
+            <div class="search-container cyber-border">
+                <h2><i class="fas fa-search"></i> Find Your Local Community</h2>
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="locationSearch">Enter your location:</label>
+                        <input type="text" id="locationSearch" placeholder="City, State, or ZIP Code">
+                    </div>
+                    <button class="btn btn-primary" id="searchBtn">
+                        <i class="fas fa-search"></i> SEARCH COMMUNITIES
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Communities -->
+        <section class="communities-section">
+            <h2 class="section-title"><i class="fas fa-users"></i> Featured Communities</h2>
+            
+            <div class="locals-grid" id="communitiesGrid">
+                <!-- Communities will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Community Resources -->
+        <section class="resources-section">
+            <h2 class="section-title"><i class="fas fa-book"></i> Community Resources</h2>
+            
+            <div class="resources-grid">
+                <div class="resource-card cyber-border">
+                    <div class="resource-header">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Safety Guidelines</h3>
+                    </div>
+                    <p>Essential safety protocols for community organizers and parents working to protect children online.</p>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Download Guide
+                    </a>
+                </div>
+
+                <div class="resource-card cyber-border">
+                    <div class="resource-header">
+                        <i class="fas fa-gavel"></i>
+                        <h3>Legal Resources</h3>
+                    </div>
+                    <p>Information about reporting procedures, legal protections, and working with law enforcement.</p>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-external-link-alt"></i> View Resources
+                    </a>
+                </div>
+
+                <div class="resource-card cyber-border">
+                    <div class="resource-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Educational Materials</h3>
+                    </div>
+                    <p>Training materials, presentations, and educational content for community awareness programs.</p>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> Access Materials
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Join Community Form -->
+        <section class="join-section">
+            <div class="join-container cyber-border">
+                <h2><i class="fas fa-plus-circle"></i> Start a Local Community</h2>
+                <p>Don't see a community in your area? Start one! We'll help you connect with other local advocates.</p>
+                
+                <form id="joinCommunityForm" class="join-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="organizerName">Your Name *</label>
+                            <input type="text" id="organizerName" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerEmail">Email Address *</label>
+                            <input type="email" id="organizerEmail" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="communityLocation">Location *</label>
+                            <input type="text" id="communityLocation" name="location" placeholder="City, State" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="communityType">Community Type *</label>
+                            <select id="communityType" name="type" required>
+                                <option value="">Select Type</option>
+                                <option value="parent-group">Parent Group</option>
+                                <option value="school-district">School District</option>
+                                <option value="neighborhood">Neighborhood Watch</option>
+                                <option value="advocacy">Advocacy Organization</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="communityDescription">Community Description</label>
+                        <textarea id="communityDescription" name="description" rows="4" placeholder="Tell us about your community goals and focus areas..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreeTerms" name="agree" required>
+                            <span class="checkmark"></span>
+                            I agree to follow CyberSentinel community guidelines and safety protocols
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> START COMMUNITY
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">CYBER<span>SENTINEL</span></div>
+                <p class="footer-tagline">Protecting the digital frontier.<br>ExposingWithJay © 2026</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>QUICK_LINKS</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="mission.html">Mission</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="locals.html">Locals</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>CONNECT</h4>
+                <div class="footer-social">
+                    <a href="https://discord.gg/X3gNgdNhyz" target="_blank" class="social-link">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://youtube.com/@ExposingWithJay" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@.exposingwithjay" target="_blank" class="social-link">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <div class="system-status-footer">
+                    <div class="status-display-footer">
+                        <span class="status-indicator online"></span>
+                        <span>// SYSTEM STATUS: ONLINE //</span>
+                    </div>
+                    <div class="threat-level low">
+                        <span class="status-indicator"></span>
+                        <span>THREAT LEVEL: VIGILANT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 CyberSentinel. All rights reserved. | Protecting Children Online</p>
+            <div class="legal-links">
+                <a href="#" onclick="return false;">Privacy Policy</a>
+                <a href="#" onclick="return false;">Terms of Service</a>
+                <a href="#" onclick="return false;">Legal Notice</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/locals.js"></script>
+</body>
+</html>
